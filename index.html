@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UML Modpack - Minecraft 1.21.10 Utility Modpack</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: #1a1a1a;
+            color: #fff;
+            line-height: 1.6;
+            min-height: 100vh;
+            image-rendering: pixelated;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                repeating-linear-gradient(0deg, transparent, transparent 15px, rgba(0,0,0,0.3) 15px, rgba(0,0,0,0.3) 16px),
+                repeating-linear-gradient(90deg, transparent, transparent 15px, rgba(0,0,0,0.3) 15px, rgba(0,0,0,0.3) 16px);
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        header {
+            text-align: center;
+            padding: 60px 20px;
+            background: #2d5016;
+            border: 4px solid #3d6621;
+            box-shadow: 
+                inset 0 0 0 2px #1a3009,
+                8px 8px 0 rgba(0, 0, 0, 0.5);
+            margin-bottom: 40px;
+            position: relative;
+        }
+
+        header::after {
+            content: '';
+            position: absolute;
+            top: -4px;
+            left: -4px;
+            right: -4px;
+            bottom: -4px;
+            border: 2px solid #4a7a2c;
+            pointer-events: none;
+        }
+
+        h1 {
+            font-size: 3.5em;
+            margin-bottom: 10px;
+            text-shadow: 4px 4px 0 rgba(0, 0, 0, 0.5);
+            color: #ffff55;
+            letter-spacing: 2px;
+        }
+
+        .version {
+            font-size: 1.2em;
+            color: #aaffaa;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.5);
+        }
+
+        .tagline {
+            font-size: 1.3em;
+            margin-top: 15px;
+            color: #ffffff;
+            text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.5);
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
+        }
+
+        .feature-card {
+            background: #4a4a4a;
+            padding: 30px;
+            border: 4px solid #666;
+            box-shadow: 
+                inset 0 0 0 2px #2a2a2a,
+                8px 8px 0 rgba(0, 0, 0, 0.5);
+            transition: transform 0.1s ease;
+            position: relative;
+        }
+
+        .feature-card::after {
+            content: '';
+            position: absolute;
+            top: -4px;
+            left: -4px;
+            right: -4px;
+            bottom: -4px;
+            border: 2px solid #888;
+            pointer-events: none;
+        }
+
+        .feature-card:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 
+                inset 0 0 0 2px #2a2a2a,
+                10px 10px 0 rgba(0, 0, 0, 0.5);
+        }
+
+        .feature-card:active {
+            transform: translate(2px, 2px);
+            box-shadow: 
+                inset 0 0 0 2px #2a2a2a,
+                6px 6px 0 rgba(0, 0, 0, 0.5);
+        }
+
+        .feature-card h3 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            color: #ffff55;
+            text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.5);
+        }
+
+        .cta-section {
+            text-align: center;
+            padding: 50px 20px;
+            background: #8b4513;
+            border: 4px solid #a0522d;
+            box-shadow: 
+                inset 0 0 0 2px #5d2e0f,
+                8px 8px 0 rgba(0, 0, 0, 0.5);
+            margin: 40px 0;
+            position: relative;
+        }
+
+        .cta-section::after {
+            content: '';
+            position: absolute;
+            top: -4px;
+            left: -4px;
+            right: -4px;
+            bottom: -4px;
+            border: 2px solid #cd853f;
+            pointer-events: none;
+        }
+
+        .download-btn {
+            display: inline-block;
+            padding: 18px 45px;
+            background: #5cb85c;
+            color: white;
+            text-decoration: none;
+            font-size: 1.3em;
+            font-weight: bold;
+            border: 4px solid #4cae4c;
+            box-shadow: 
+                inset 0 0 0 2px #3d8b3d,
+                6px 6px 0 rgba(0, 0, 0, 0.5);
+            margin: 10px;
+            position: relative;
+            transition: transform 0.1s ease;
+            text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.3);
+        }
+
+        .download-btn::after {
+            content: '';
+            position: absolute;
+            top: -4px;
+            left: -4px;
+            right: -4px;
+            bottom: -4px;
+            border: 2px solid #6ec56e;
+            pointer-events: none;
+        }
+
+        .download-btn:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 
+                inset 0 0 0 2px #3d8b3d,
+                8px 8px 0 rgba(0, 0, 0, 0.5);
+        }
+
+        .download-btn:active {
+            transform: translate(2px, 2px);
+            box-shadow: 
+                inset 0 0 0 2px #3d8b3d,
+                4px 4px 0 rgba(0, 0, 0, 0.5);
+        }
+
+        .info-section {
+            background: #4169e1;
+            padding: 30px;
+            border: 4px solid #5a7fd6;
+            box-shadow: 
+                inset 0 0 0 2px #2849a8,
+                8px 8px 0 rgba(0, 0, 0, 0.5);
+            margin: 30px 0;
+            position: relative;
+        }
+
+        .info-section::after {
+            content: '';
+            position: absolute;
+            top: -4px;
+            left: -4px;
+            right: -4px;
+            bottom: -4px;
+            border: 2px solid #6a8fe6;
+            pointer-events: none;
+        }
+
+        .info-section h2 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            color: #ffff55;
+            text-shadow: 3px 3px 0 rgba(0, 0, 0, 0.5);
+        }
+
+        .info-section p {
+            margin: 10px 0;
+            text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.3);
+        }
+
+        .info-section strong {
+            color: #ffff55;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 20px;
+            margin-top: 50px;
+            font-size: 0.95em;
+            background: #333;
+            border: 4px solid #444;
+            box-shadow: 8px 8px 0 rgba(0, 0, 0, 0.5);
+        }
+
+        footer a {
+            color: #5599ff;
+            text-decoration: none;
+            text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.5);
+        }
+
+        footer a:hover {
+            color: #77aaff;
+        }
+
+        .icon {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            filter: drop-shadow(3px 3px 0 rgba(0, 0, 0, 0.5));
+        }
+
+        .cta-section h2 {
+            color: #ffff55;
+            text-shadow: 3px 3px 0 rgba(0, 0, 0, 0.5);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>⛏️ UML MODPACK ⛏️</h1>
+            <div class="version">MINECRAFT 1.21.10</div>
+            <p class="tagline">THE ULTIMATE UTILITY MODPACK</p>
+        </header>
+
+        <div class="features">
+            <div class="feature-card">
+                <div class="icon">🛠️</div>
+                <h3>UTILITY FOCUSED</h3>
+                <p>Packed with essential mods that enhance your gameplay without changing the core Minecraft experience.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="icon">⚙️</div>
+                <h3>OPTIMIZED</h3>
+                <p>Carefully selected mods to ensure smooth gameplay and better FPS on various hardware configurations.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="icon">🎮</div>
+                <h3>QUALITY OF LIFE</h3>
+                <p>Includes improvements to inventory management, minimap, chat features, and much more to make your life easier.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="icon">🔄</div>
+                <h3>REGULAR UPDATES</h3>
+                <p>Stay up-to-date with the latest Minecraft version and mod compatibility improvements.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="icon">🌐</div>
+                <h3>MULTIPLAYER READY</h3>
+                <p>Works great on both singleplayer and multiplayer servers with client-side optimizations.</p>
+            </div>
+
+            <div class="feature-card">
+                <div class="icon">📦</div>
+                <h3>EASY INSTALL</h3>
+                <p>Download directly from Modrinth and get started in minutes with simple setup instructions.</p>
+            </div>
+        </div>
+
+        <div class="cta-section">
+            <h2>READY TO ENHANCE YOUR MINECRAFT?</h2>
+            <p style="margin: 20px 0; font-size: 1.1em;">Download UML Modpack now and experience Minecraft like never before!</p>
+            <a href="https://modrinth.com/project/unp-modpacks-uml/" class="download-btn" target="_blank">📥 DOWNLOAD ON MODRINTH</a>
+        </div>
+
+        <div class="info-section">
+            <h2>INSTALLATION GUIDE</h2>
+            <p><strong>STEP 1:</strong> Install a compatible Minecraft launcher (we recommend the official launcher or Prism Launcher)</p>
+            <p><strong>STEP 2:</strong> Visit the Modrinth page and click the download button</p>
+            <p><strong>STEP 3:</strong> Import the modpack file into your launcher</p>
+            <p><strong>STEP 4:</strong> Launch and enjoy your enhanced Minecraft experience!</p>
+        </div>
+
+        <div class="info-section">
+            <h2>ABOUT THIS MODPACK</h2>
+            <p>UML Modpack is a comprehensive utility modpack designed for Minecraft 1.21.10. It focuses on providing players with essential quality of life improvements, performance enhancements, and useful features while maintaining the vanilla Minecraft feel.</p>
+            <p style="margin-top: 15px;">Whether you're building, exploring, or just enjoying the game, UML has the tools you need to make your experience better.</p>
+        </div>
+
+        <footer>
+            <p>Licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a></p>
+            <p style="margin-top: 10px;">This means you can share and adapt this modpack non-commercially, with attribution and under the same license.</p>
+            <p style="margin-top: 20px;">Made with ❤️ for the Minecraft community</p>
+        </footer>
+    </div>
+</body>
+</html>
